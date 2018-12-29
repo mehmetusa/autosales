@@ -2,60 +2,122 @@ package kiosk;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 
 public class  read_file {
-	public static void main(String[] args) {
+	
+	static File f = new File(time.kiosklog_file_name());
+	
+	public static void main(String[] args) throws IOException {
 	//	System.out.println(rented_stroller());
 	//	returned_stroller();
 	//	paid_coin();
-		coins();
+		System.out.println(coins_in_hopper());
+	//	total_bills();
 		
 	}
 	
-	public static String coins() {
-		Integer rented1 = 0;
-		ArrayList<String> list = new ArrayList<String>();
+	
+	
+	public static String  inserted_coins() throws IOException {
+		LinkedList<String> li = new LinkedList<String>();
 		try {
-			File f = new File(time.eventlog_file_name());
-					//"C:\\kioskfiles\\EventLog12.11.2018.txt");
+		//	File f = new File(time.kiosklog_file_name());
+			          // "C:\\kioskfiles\\KioskLog12.11.2018.txt");
+		//	f.createNewFile();
+			if(!f.exists()){return "0";	}
 			Scanner scan;
 			scan = new Scanner(f);
 			while (scan.hasNext()) {
-				list.add(scan.nextLine());
-				
-				//System.out.println(scan.nextLine());
+				li.add(scan.nextLine());
 			}
 			scan.close();
-//			Object[] aaa = list.toArray();
-//			for (Object bb : aaa) {
-//				list.add(bb.toString());
-//			}
-			for (String b : list) {
-				if (b.contains("Returned Car In")) {
-					rented1++;
-				}
-				
-			}
-			 System.out.println(list.size());
-			System.out.println("coins   " + rented1);
-			System.out.println("coins   " + list.get(31));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-        int rent = rented1/2;
-  //      System.out.println(rent);
-		return String.valueOf(rent);
+		for(String a:li){
+	//		System.out.println(a);
 		}
+		String[] last_line = li.getLast().split(" ");
+		
+		String coin = last_line[12];
+    //    System.out.println(coin);		
+        return coin;
+	}
+	
+	
+	
+	public static String  total_bills() throws IOException {
+		LinkedList<String> li = new LinkedList<String>();
+		try {
+		//	File f = new File(time.kiosklog_file_name());
+			          // "C:\\kioskfiles\\KioskLog12.11.2018.txt");
+		//	f.createNewFile();
+			if(!f.exists()){return "0";	}
+			Scanner scan;
+			scan = new Scanner(f);
+			while (scan.hasNext()) {
+				li.add(scan.nextLine());
+			}
+			scan.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		for(String a:li){
+	//		System.out.println(a);
+		}
+		String[] last_line = li.getLast().split(" ");
+		
+		String bill = last_line[10];
+  //      System.out.println(bill);		
+        return bill;
+	}
+	
+	
+	
+	
+	
+	public static String  coins_in_hopper() throws IOException {
+		LinkedList<String> li = new LinkedList<String>();
+		try {
+		//	File f = new File(time.kiosklog_file_name());
+			          // "C:\\kioskfiles\\KioskLog12.11.2018.txt");
+			if(!f.exists()){return "0";	}
 
-	public static String rented_stroller() {
+			Scanner scan;
+			scan = new Scanner(f);
+			while (scan.hasNext()) {
+				li.add(scan.nextLine());
+			}
+			scan.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		String[] coin_line = li.getLast().split(" ");
+		String co = coin_line[coin_line.length - 1];
+    //    System.out.println(co);		
+        return co;
+	}
+
+	
+	
+	
+	
+	
+	public static String rented_stroller() throws IOException {
 		Integer rented1 = 0;
 		ArrayList<String> list = new ArrayList<String>();
 		try {
-			File f = new File(time.eventlog_file_name());
+			//File f = new File(time.kiosklog_file_name());
 					//"C:\\kioskfiles\\EventLog12.11.2018.txt");
+			if(!f.exists()){return "0";	}
+			if(!f.canRead()){
+				return "0";}
 			Scanner scan;
 			scan = new Scanner(f);
 			while (scan.hasNext()) {
@@ -83,11 +145,17 @@ public class  read_file {
 		}
 	
 	
-	public static int returned_stroller() {
+	
+	
+	
+	
+	public static int returned_stroller() throws IOException {
 		int x1 = 0;
 		ArrayList<String> list = new ArrayList<String>();
 		try {
-			File f = new File(time.eventlog_file_name());
+		//	File f = new File(time.kiosklog_file_name());
+			if(!f.exists()){return 0;	}
+		
 			Scanner scan;
 			scan = new Scanner(f);
 			while (scan.hasNext()) {
@@ -113,11 +181,19 @@ public class  read_file {
 		}
 	
 	
-	public static int paid_coin() {
+	
+	
+	
+	
+	
+	
+	
+	public static int paid_coin() throws IOException {
 		int x1 = 0;
 		ArrayList<String> list = new ArrayList<String>();
 		try {
-			File f = new File(time.eventlog_file_name());
+			File f = new File(time.kiosklog_file_name());
+			if(!f.exists()){return 0;	}
 			Scanner scan;
 			scan = new Scanner(f);
 			while (scan.hasNext()) {
@@ -145,22 +221,26 @@ public class  read_file {
 		return returned_stroller;
 		}
 	
-	 public static String test(int i){
-	        String nums = null;
-			try {
-				File f = new File("C:\\kioskfiles\\remote.txt");			
-				Scanner scan = new Scanner(f);
-				ArrayList<String> list = new ArrayList<String>();
-				while(scan.hasNext()){
-				     list.add(scan.next());
-				}
-				 nums = list.get(i);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-	     
-	    	return nums;
-	    	} 
+	
+	
+	
+	
+//	 public static String test(int i){
+//	        String nums = null;
+//			try {
+//				File f = new File("C:\\kioskfiles\\remote.txt");			
+//				Scanner scan = new Scanner(f);
+//				ArrayList<String> list = new ArrayList<String>();
+//				while(scan.hasNext()){
+//				     list.add(scan.next());
+//				}
+//				 nums = list.get(i);
+//			} catch (FileNotFoundException e) {
+//				e.printStackTrace();
+//			}
+//	     
+//	    	return nums;
+//	    	} 
 	
 	
 	
